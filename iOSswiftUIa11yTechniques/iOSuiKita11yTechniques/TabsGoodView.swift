@@ -1,38 +1,64 @@
-/*
-   Copyright 2023 CVS Health and/or one of its affiliates
+import UIKit
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- */
-
-import SwiftUI
- 
-struct TabsGoodView: View {
-    var body: some View {
-        TabView {
-            HomeTabView()
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                }
-            MessagesTabView()
-                .tabItem {
-                    Label("Messages", systemImage: "envelope")
-                }
-        }.accessibilityLabel("Navigation")
+class TabsGoodViewController: UITabBarController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "TabsGoodView"
+        setupTabs()
+        
+        // Set accessibility label for the tab bar
+        tabBar.accessibilityLabel = "Navigation"
+    }
+    
+    private func setupTabs() {
+        // Create Home tab
+        let homeVC = HomeTabViewController()
+        homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
+        
+        // Create Messages tab
+        let messagesVC = MessagesTabViewController()
+        messagesVC.tabBarItem = UITabBarItem(title: "Messages", image: UIImage(systemName: "envelope"), tag: 1)
+        
+        // Set view controllers
+        self.viewControllers = [homeVC, messagesVC]
     }
 }
- 
-struct TabsGoodView_Previews: PreviewProvider {
-    static var previews: some View {
-        TabsGoodView()
+
+// Home Tab View Controller
+class HomeTabViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Home"
+        view.backgroundColor = .systemBackground
+        
+        let label = UILabel()
+        label.text = "Home Tab Content"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
+        
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+}
+
+// Messages Tab View Controller
+class MessagesTabViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Messages"
+        view.backgroundColor = .systemBackground
+        
+        let label = UILabel()
+        label.text = "Messages Tab Content"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
+        
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 }
