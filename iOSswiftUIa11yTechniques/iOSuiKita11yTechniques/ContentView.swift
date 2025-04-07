@@ -161,7 +161,6 @@ struct ContentView: View {
         case "navigation": NavigationLinkView()
         case "page titles": PageTitlesView()
         case "pickers": PickersView()
-        case "popovers": PopoversView()
         case "progress indicators": ProgressIndicatorsView()
         case "prototypes": PrototypesView()
         case "radio buttons": RadioButtonsView()
