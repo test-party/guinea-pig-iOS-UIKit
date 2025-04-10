@@ -121,12 +121,12 @@ class ButtonsViewController: UIViewController, UITextFieldDelegate {
         loginButton.setTitle("Log In", for: .normal)
         loginButton.contentHorizontalAlignment = .left
         loginButton.isEnabled = false
-        loginButton.accessibilityIdentifier = "loginGood"
+        loginButton.accessibilityLabel = "loginGood"
         loginButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         stackView.addArrangedSubview(loginButton)
         
         // Details disclosure for disabled button
-        let disabledDetailsButton = createDisclosureButton(withTitle: "Details", detailsText: "The good disabled button example uses `.disabled(true)` to set the disabled state of the Log In button. VoiceOver users will hear the disabled (dimmed) state. Full Keyboard Access users will not be able to move focus to the good disabled button example which is the expected behavior for disabled buttons.", hint: "Good Example Disabled Button")
+        let disabledDetailsButton = createDisclosureButton(withTitle: "Details", detailsText: "The good disabled button example uses `.disabled(true)` to set the disabled state of the Log In button. VoiceOver users will hear the disabled (dimmed) state. Full Keyboard Access users will not be able to move focus to the good disabled button example which is the expected behavior for disabled buttons.", hint: "Good Example Disabled Btn id")
         stackView.addArrangedSubview(disabledDetailsButton)
         
         // Bad Examples Header
@@ -150,7 +150,7 @@ class ButtonsViewController: UIViewController, UITextFieldDelegate {
         stackView.addArrangedSubview(badEmailRow)
         
         // Details disclosure for bad example
-        let badDetailsButton = createDisclosureButton(withTitle: "Details", detailsText: "The bad generic button labels example uses the same label text \"Edit\" for both buttons without providing a unique and specific `.accessibilityLabel` for VoiceOver users. The second bad Edit button incorrectly includes the role \"Button\" inside the `.accessibilityLabel`.", hint: "Bad Example Generic Labels")
+        let badDetailsButton = createDisclosureButton(withTitle: "Details", detailsText: "The bad generic button labels example uses the same label text \"Edit\" for both buttons without providing a unique and specific `.accessibilityLabel` for VoiceOver users. The second bad Edit button incorrectly includes the role \"Button\" inside the `.accessibilityLabel`.", hint: "Bad Example Generic Labels id")
         stackView.addArrangedSubview(badDetailsButton)
         
         // Bad Example Disabled Button
@@ -178,12 +178,12 @@ class ButtonsViewController: UIViewController, UITextFieldDelegate {
         badLoginButton.setTitle("Log In", for: .normal)
         badLoginButton.contentHorizontalAlignment = .left
         badLoginButton.tintColor = .gray
-        badLoginButton.accessibilityIdentifier = "loginBad"
+        badLoginButton.accessibilityLabel = "loginBad"
         badLoginButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         stackView.addArrangedSubview(badLoginButton)
         
         // Details disclosure for bad disabled button
-        let badDisabledDetailsButton = createDisclosureButton(withTitle: "Details", detailsText: "The bad disabled button example uses `.tint(.gray)` to visually convey that the Log In button is disabled but VoiceOver will not speak a disabled state. Full Keyboard Access users will be able to move focus to the bad disabled button example which is not the expected behavior for disabled buttons.", hint: "Bad Example Disabled Button")
+        let badDisabledDetailsButton = createDisclosureButton(withTitle: "Details", detailsText: "The bad disabled button example uses `.tint(.gray)` to visually convey that the Log In button is disabled but VoiceOver will not speak a disabled state. Full Keyboard Access users will be able to move focus to the bad disabled button example which is not the expected behavior for disabled buttons.", hint: "Bad Example Disabled Button id")
         stackView.addArrangedSubview(badDisabledDetailsButton)
     }
     
@@ -290,6 +290,7 @@ class ButtonsViewController: UIViewController, UITextFieldDelegate {
         button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         button.semanticContentAttribute = .forceRightToLeft
         button.accessibilityHint = hint
+        button.accessibilityLabel = hint
         button.tag = container.hash
         button.addTarget(self, action: #selector(toggleDisclosure(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
