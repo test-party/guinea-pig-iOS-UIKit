@@ -249,7 +249,7 @@ class DateTimePickersViewController: UIViewController {
         let badAccessibilityDetailsDisclosure = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The first bad Date Pickers example has no `.accessibilityLabel` for each `DatePicker` that matches the visible label text.",
-            accessibilityHint: "Bad Example No `.accessibilityLabel`"
+            accessibilityHint: "Bad Example No `.accessibilityLabel btn`"
         )
         contentStackView.addArrangedSubview(badAccessibilityDetailsDisclosure)
         
@@ -379,6 +379,7 @@ class DateTimePickersViewController: UIViewController {
         disclosureButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         disclosureButton.translatesAutoresizingMaskIntoConstraints = false
         disclosureButton.accessibilityHint = accessibilityHint
+        disclosureButton.accessibilityLabel = accessibilityHint
         disclosureButton.tag = 0 // Closed state
         
         let detailsLabel = UILabel()
