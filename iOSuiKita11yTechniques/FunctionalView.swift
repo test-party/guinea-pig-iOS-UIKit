@@ -117,7 +117,7 @@ class FunctionalViewController: UIViewController {
         let goodExampleDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The good functional image example uses an image button with `.accessibilityLabel(\"Scan barcode\"))` to give the button a meaningful accessibility label that describes its purpose to VoiceOver users.",
-            accessibilityHint: "Good Example `Image` `Button` `.accessibilityLabel`"
+            accessibilityHint: "Good Example `Image` `Btn` `.accessibilityLabel`"
         )
         contentStackView.addArrangedSubview(goodExampleDetails)
         
@@ -153,7 +153,7 @@ class FunctionalViewController: UIViewController {
             let ios18Details = createDisclosureGroup(
                 headerText: "Details",
                 detailsText: "The iOS 18+ good example image button uses `accessibilityLabel(_:isEnabled:)` to change the accessibility label to be \"Super Favorite\" when toggled and use the default SF Symbols VoiceOver label of \"Favorite\" when not toggled.",
-                accessibilityHint: "iOS 18+ Good Example `Image` `Button` `accessibilityLabel(_:isEnabled:)`"
+                accessibilityHint: "iOS 18+ Good Example `Image` `Btn` `accessibilityLabel(_:isEnabled:)`"
             )
             contentStackView.addArrangedSubview(ios18Details)
         }
@@ -197,7 +197,7 @@ class FunctionalViewController: UIViewController {
         let badExample1Details = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad functional image example uses no `.accessibilityLabel` to give the image button a meaningful accessibility label causing VoiceOver to read the image filename \"barcode.viewfinder\" as the name of the button.",
-            accessibilityHint: "Bad Example `Image` `Button` no `.accessibilityLabel`"
+            accessibilityHint: "Bad Example `Image` `Btn` no `.accessibilityLabel`"
         )
         contentStackView.addArrangedSubview(badExample1Details)
         
@@ -236,7 +236,7 @@ class FunctionalViewController: UIViewController {
         let badExample2Details = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The second bad functional image example is incorrectly coded as an `Image` element with a `TapGesture` rather than as a `Button` which prevents VoiceOver users from hearing the \"Button\" trait spoken and they won't know the image is an actionable control. There is also no `.accessibilityLabel`.",
-            accessibilityHint: "Bad Example `Image` `TapGesture()` no `.accessibilityLabel`"
+            accessibilityHint: "Bad Example Btn `Image` `TapGesture()` no `.accessibilityLabel`"
         )
         contentStackView.addArrangedSubview(badExample2Details)
     }
@@ -284,6 +284,7 @@ class FunctionalViewController: UIViewController {
         disclosureButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         disclosureButton.translatesAutoresizingMaskIntoConstraints = false
         disclosureButton.accessibilityHint = accessibilityHint
+        disclosureButton.accessibilityLabel = accessibilityHint
         disclosureButton.tag = 0 // Closed state
         
         let detailsLabel = UILabel()
