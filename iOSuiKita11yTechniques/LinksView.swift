@@ -92,13 +92,14 @@ class LinksViewController: UIViewController {
         let goodStandaloneLink = createLink(text: "View Weekly Ad", url: "https://www.example.com/weekly-ad", isGood: true)
         goodStandaloneLink.accessibilityTraits.remove(.button)
         goodStandaloneLink.accessibilityIdentifier = "goodLink2"
+        goodStandaloneLink.accessibilityLabel = "goodLink2"
         contentStackView.addArrangedSubview(goodStandaloneLink)
         
         // Details disclosure for good standalone link
         let goodStandaloneLinkDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The good standalone link example is correctly coded as a `Link` element which speaks a \"Link\" trait to VoiceOver. The color contrast is corrected using an `AccentColor` with sufficient contrast for light and dark appearance in the assets catalog `Assets.xcassets` file. The Button is trait removed so that VoiceOver does not speak \"Button, Link\".",
-            accessibilityHint: "Good Example Standalone Link"
+            accessibilityHint: "Good Example Btn Standalone Link"
         )
         contentStackView.addArrangedSubview(goodStandaloneLinkDetails)
         
@@ -117,6 +118,7 @@ class LinksViewController: UIViewController {
         addUnderline(to: loginLink)
         loginLink.accessibilityTraits.remove(.button)
         loginLink.accessibilityIdentifier = "goodLink1a"
+        loginLink.accessibilityLabel = "goodLink1a"
         
         let orText = createLabel(text: "or")
         
@@ -124,6 +126,7 @@ class LinksViewController: UIViewController {
         addUnderline(to: createAccountLink)
         createAccountLink.accessibilityTraits.remove(.button)
         createAccountLink.accessibilityIdentifier = "goodLink1b"
+        createAccountLink.accessibilityLabel = "goodLink1b"
         
         // Add all elements to the container
         inlineLinksContainer.addSubview(startText)
@@ -160,7 +163,7 @@ class LinksViewController: UIViewController {
         let goodInlineLinkDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The good inline links example uses unique and specific link text. `.underline()` is used to make the inline links visually distinct without using color alone. An `AccentColor` with sufficient contrast for light and dark appearance is specified in the assets catalog `Assets.xcassets` file. Additionally `.accessibilityRemoveTraits(.isButton)` is used to remove the Button trait so that VoiceOver users don't hear \"Button\" spoken.",
-            accessibilityHint: "Good Example Inline Links"
+            accessibilityHint: "Good Example Btn Inline Links"
         )
         contentStackView.addArrangedSubview(goodInlineLinkDetails)
         
@@ -184,7 +187,7 @@ class LinksViewController: UIViewController {
         let goodAttributedDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The good `AttributedString` inline links example uses `AttributedString` to set `.underlineStyle = Text.LineStyle(nsUnderlineStyle: .single)`. An `AccentColor` with sufficient contrast for light and dark appearance is specified in the assets catalog `Assets.xcassets` file. With `AttributedString` links VoiceOver users must use the Rotor to focus on each link invidiually.",
-            accessibilityHint: "Good Example AttributedString Inline Links"
+            accessibilityHint: "Good Example Btn AttributedString Inline Links"
         )
         contentStackView.addArrangedSubview(goodAttributedDetails)
         
@@ -208,7 +211,7 @@ class LinksViewController: UIViewController {
         let markdownDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The inline markdown links example uses markdown format links `[Name](https://www.example.com)` where each link must be focused invidually using the VoiceOver Rotor. The markdown links have a `AccentColor` applied with sufficient contrast but they cannot be underlined or have different text style than the surrounding inline text.",
-            accessibilityHint: "Markdown Inline Links Example"
+            accessibilityHint: "Markdown Btn Inline Links Example"
         )
         contentStackView.addArrangedSubview(markdownDetails)
         
@@ -237,7 +240,7 @@ class LinksViewController: UIViewController {
         let badStandaloneLinkDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad standalone link example is incorrectly coded as a `Button` element which speaks a \"Button\" trait to VoiceOver rather than a \"Link\" trait. The `.tint(.blue)` color link contrast ratio is below the 4.5:1 WCAG minimum.",
-            accessibilityHint: "Bad Example Standalone Link"
+            accessibilityHint: "Bad Example Btn Standalone Link"
         )
         contentStackView.addArrangedSubview(badStandaloneLinkDetails)
         
@@ -296,7 +299,7 @@ class LinksViewController: UIViewController {
         let badInlineLinkDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad inline links example uses generic link text \"Click here\" and \"here\" and the links are not underlined to be visually distinct without using color alone. The bad link examples use the `.tint(.blue)` color which has an insufficient contrast ratio. The default Button trait remains causing VoiceOver to speak \"Button, Link\".",
-            accessibilityHint: "Bad Example Inline Links"
+            accessibilityHint: "Bad Example Btn Inline Links"
         )
         contentStackView.addArrangedSubview(badInlineLinkDetails)
         
@@ -320,7 +323,7 @@ class LinksViewController: UIViewController {
         let badAttributedDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad `AttributedString` inline links example uses `AttributedString` with the default link style for each link inside the attributed string. The inline links are not underlined or made visually distinct without using color alone. VoiceOver users must focus each link invidiually using the Rotor.",
-            accessibilityHint: "Bad Example AttributedString Inline Links"
+            accessibilityHint: "Bad Example Btn AttributedString Inline Links"
         )
         contentStackView.addArrangedSubview(badAttributedDetails)
         
@@ -344,7 +347,7 @@ class LinksViewController: UIViewController {
         let badMarkdownDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad inline markdown links example uses Markdown inline links with `.tint(.blue)` which have insufficient contrast and are not underlined.",
-            accessibilityHint: "Bad Example Inline Markdown Links"
+            accessibilityHint: "Bad Example Btn Inline Markdown Links"
         )
         contentStackView.addArrangedSubview(badMarkdownDetails)
     }
@@ -390,7 +393,7 @@ class LinksViewController: UIViewController {
         button.addTarget(self, action: #selector(linkTapped(_:)), for: .touchUpInside)
         
         // Set accessibility traits for links
-        button.accessibilityTraits = [.button, .link]
+        button.accessibilityTraits = [.link]
         
         return button
     }
@@ -566,6 +569,7 @@ class LinksViewController: UIViewController {
         disclosureButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         disclosureButton.translatesAutoresizingMaskIntoConstraints = false
         disclosureButton.accessibilityHint = accessibilityHint
+        disclosureButton.accessibilityLabel = accessibilityHint
         disclosureButton.tag = 0 // Closed state
         
         let detailsLabel = UILabel()
