@@ -323,7 +323,7 @@ class LinksViewController: UIViewController {
         let badAttributedDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad `AttributedString` inline links example uses `AttributedString` with the default link style for each link inside the attributed string. The inline links are not underlined or made visually distinct without using color alone. VoiceOver users must focus each link invidiually using the Rotor.",
-            accessibilityHint: "Bad Example AttributedString Inline Links"
+            accessibilityHint: "Bad Example Btn AttributedString Inline Links"
         )
         contentStackView.addArrangedSubview(badAttributedDetails)
         
@@ -347,7 +347,7 @@ class LinksViewController: UIViewController {
         let badMarkdownDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad inline markdown links example uses Markdown inline links with `.tint(.blue)` which have insufficient contrast and are not underlined.",
-            accessibilityHint: "Bad Example Inline Markdown Links"
+            accessibilityHint: "Bad Example Btn Inline Markdown Links"
         )
         contentStackView.addArrangedSubview(badMarkdownDetails)
     }
@@ -393,7 +393,7 @@ class LinksViewController: UIViewController {
         button.addTarget(self, action: #selector(linkTapped(_:)), for: .touchUpInside)
         
         // Set accessibility traits for links
-        button.accessibilityTraits = [.button, .link]
+        button.accessibilityTraits = [.link]
         
         return button
     }
