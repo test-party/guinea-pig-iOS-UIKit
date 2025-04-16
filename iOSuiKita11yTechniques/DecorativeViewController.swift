@@ -111,6 +111,7 @@ class DecorativeViewController: UIViewController {
         )
         shopWeeklyAdButton.setAttributedTitle(attributedString, for: .normal)
         shopWeeklyAdButton.addTarget(self, action: #selector(openWeeklyAd), for: .touchUpInside)
+        shopWeeklyAdButton.accessibilityLabel = "Shop btn link"
         contentStackView.addArrangedSubview(shopWeeklyAdButton)
         
         // Details disclosure for good image
@@ -144,7 +145,7 @@ class DecorativeViewController: UIViewController {
         let goodIconDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The good decorative icon image example uses `.accessibilityHidden(true)` which prevents VoiceOver from focusing on the icon.",
-            accessibilityHint: "Good Example `.accessibilityHidden(true)`"
+            accessibilityHint: "Good Example `.accessibilityHidden(true) details`"
         )
         contentStackView.addArrangedSubview(goodIconDetails)
         
@@ -175,7 +176,7 @@ class DecorativeViewController: UIViewController {
         
         // Shop weekly ad link repeated
         let shopWeeklyAdButtonRepeated = UIButton(type: .system)
-        shopWeeklyAdButtonRepeated.setTitle("Shop weekly ad", for: .normal)
+        shopWeeklyAdButtonRepeated.setTitle("Shop weekly ad 2", for: .normal)
         shopWeeklyAdButtonRepeated.setAttributedTitle(attributedString, for: .normal)
         shopWeeklyAdButtonRepeated.addTarget(self, action: #selector(openWeeklyAd), for: .touchUpInside)
         contentStackView.addArrangedSubview(shopWeeklyAdButtonRepeated)
@@ -260,6 +261,7 @@ class DecorativeViewController: UIViewController {
         disclosureButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         disclosureButton.translatesAutoresizingMaskIntoConstraints = false
         disclosureButton.accessibilityHint = accessibilityHint
+        disclosureButton.accessibilityLabel = accessibilityHint
         disclosureButton.tag = 0 // Closed state
         
         let detailsLabel = UILabel()

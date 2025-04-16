@@ -85,6 +85,7 @@ class InformativeViewController: UIViewController {
         // Documentation Button
         documentationButton = UIButton(type: .system)
         documentationButton.setTitle("Informative Images Documentation", for: .normal)
+        documentationButton.accessibilityLabel = "informative images btn"
         documentationButton.contentHorizontalAlignment = .left
         documentationButton.addTarget(self, action: #selector(openDocumentation), for: .touchUpInside)
         contentStackView.addArrangedSubview(documentationButton)
@@ -112,6 +113,7 @@ class InformativeViewController: UIViewController {
         // Center the image
         let goodImageContainer = UIView()
         goodImageContainer.addSubview(goodImage)
+        goodImageContainer.accessibilityLabel = "good img Container"
         goodImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             goodImage.centerXAnchor.constraint(equalTo: goodImageContainer.centerXAnchor),
@@ -128,7 +130,7 @@ class InformativeViewController: UIViewController {
         let goodImageDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The good informative image example uses `.accessibilityLabel(\"Get 10% off\")` to give it an accessibility label that matches the visible text shown in the image.",
-            accessibilityHint: "Good Example `Image().accessibilityLabel`"
+            accessibilityHint: "Good Example btn `Image().accessibilityLabel`"
         )
         contentStackView.addArrangedSubview(goodImageDetails)
         
@@ -179,7 +181,7 @@ class InformativeViewController: UIViewController {
         let goodLabelSystemImageDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The good informative icon image example uses `Label(\"World\", systemImage: \"globe\").labelStyle(IconOnlyLabelStyle())` to give the informative icon an accessibility label that is not displayed visually. Additionally `.accessibilityRemoveTraits(.isImage)` must be used on the icon image so that the accessibility label is spoken to VoiceOver when the `HStack` is combined into a single focusable element using `.accessibilityElement(children: .combine)`.",
-            accessibilityHint: "Good Example `Label(\"Text\", systemImage:).accessibilityRemoveTraits(.isImage)` `HStack {}.accessibilityElement(children: .combine)`"
+            accessibilityHint: "Good Example btn `Label(\"Text\", systemImage:).accessibilityRemoveTraits(.isImage)` `HStack {}.accessibilityElement(children: .combine)`"
         )
         contentStackView.addArrangedSubview(goodLabelSystemImageDetails)
         
@@ -227,7 +229,7 @@ class InformativeViewController: UIViewController {
         let goodImageTextDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The good `Image` combined with `Text` example uses `Image(systemName: \"exclamationmark.circle\").accessibilityLabel(\"Error:\")` to give the error icon alt text. `.accessibilityElement(children: .combine)` is used on the `HStack` to combine the image and text into a single focusable element with VoiceOver.",
-            accessibilityHint: "Good Example `Image` combined with `Text`"
+            accessibilityHint: "Good Example btn `Image` combined with `Text`"
         )
         contentStackView.addArrangedSubview(goodImageTextDetails)
         
@@ -275,7 +277,7 @@ class InformativeViewController: UIViewController {
         let goodLabelTextDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The good `Label` combined with `Text` example uses `Label(\"Error:\", systemImage: \"exclamationmark.circle\").labelStyle(IconOnlyLabelStyle())` to give the icon an accessibility `Label` that is not displayed visually. Additionally `.accessibilityRemoveTraits(.isImage)` must be used on the `Label` icon image so that the accessibility label is spoken to VoiceOver when the `HStack` is combined into a single focusable element using `.accessibilityElement(children: .combine)`.",
-            accessibilityHint: "Good Example `Label` combined with `Text`"
+            accessibilityHint: "Good Example Btn `Label` combined with `Text`"
         )
         contentStackView.addArrangedSubview(goodLabelTextDetails)
         
@@ -318,7 +320,7 @@ class InformativeViewController: UIViewController {
         let badImageDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad informative image example uses no `.accessibilityLabel` for the image causing VoiceOver to read the image filename* which is not meaningful. *Disable VoiceOver Text Recognition",
-            accessibilityHint: "Bad Example `Image` no `.accessibilityLabel`"
+            accessibilityHint: "Bad Example btn `Image` no `.accessibilityLabel`"
         )
         contentStackView.addArrangedSubview(badImageDetails)
         
@@ -366,7 +368,7 @@ class InformativeViewController: UIViewController {
         let badSystemImageDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad informative icon image example uses no `Label` text to give the informative icon an accessibility label causing VoiceOver to read the image as \"Globe, Image\". VoiceOver focuses on each individual part of the line of text because the `HStack` is not combined into one focusable element.",
-            accessibilityHint: "Bad Example `systemImage:` no `Label` text `HStack` not combined"
+            accessibilityHint: "Bad Example btn `systemImage:` no `Label` text `HStack` not combined"
         )
         contentStackView.addArrangedSubview(badSystemImageDetails)
         
@@ -412,7 +414,7 @@ class InformativeViewController: UIViewController {
         let badImageTextDetails = createDisclosureGroup(
             headerText: "Details",
             detailsText: "The bad `Image` combined with `Text` example uses `Image(systemName: \"exclamationmark.circle\")` with no accessibility label to give the error icon alt text. `.accessibilityElement(children: .combine)` is not used on the `HStack` to combine the image and text into a single focusable element with VoiceOver.",
-            accessibilityHint: "Bad Example `Image` combined with `Text`"
+            accessibilityHint: "Bad Example Btn `Image` combined with `Text`"
         )
         contentStackView.addArrangedSubview(badImageTextDetails)
         
@@ -525,6 +527,7 @@ class InformativeViewController: UIViewController {
         disclosureButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         disclosureButton.translatesAutoresizingMaskIntoConstraints = false
         disclosureButton.accessibilityHint = accessibilityHint
+        disclosureButton.accessibilityLabel = accessibilityHint
         disclosureButton.tag = 0 // Closed state
         
         let detailsTextView = UITextView()
