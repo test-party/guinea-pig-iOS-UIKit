@@ -108,7 +108,7 @@ class SteppersViewController: UIViewController, UITextFieldDelegate {
         let goodDetails1 = createDisclosureGroup(
             title: "Details",
             content: "The first good Stepper example uses `Text(\"Tickets: \\(tickets)\")` as the visible label text which becomes the VoiceOver accessibility label.",
-            hint: "Good Example `Stepper` with `Text` label"
+            hint: "Good Example Btn `Stepper` with `Text` label"
         )
         stackView.addArrangedSubview(goodDetails1)
         
@@ -171,7 +171,7 @@ class SteppersViewController: UIViewController, UITextFieldDelegate {
         let goodDetails2 = createDisclosureGroup(
             title: "Details",
             content: "The second good Stepper example includes a text field so that users can quickly enter a large value, e.g., 50 copies. The Stepper uses `.accessibilityLabel(\"Copies\")` to create an accessibility label for VoiceOver because the visible stepper text is empty.",
-            hint: "Good Example with `TextField` and `.accessibilityLabel`"
+            hint: "Good Example btn with `TextField` and `.accessibilityLabel`"
         )
         stackView.addArrangedSubview(goodDetails2)
         
@@ -288,6 +288,7 @@ class SteppersViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton(type: .system)
         button.setTitle("\(title) ▼", for: .normal)
         button.contentHorizontalAlignment = .left
+        button.accessibilityLabel = hint
         button.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(button)
         
