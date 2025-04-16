@@ -84,11 +84,11 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         triggerButton.contentHorizontalAlignment = .left
         triggerButton.addTarget(self, action: #selector(showGoodPopover), for: .touchUpInside)
         triggerButton.isAccessibilityElement = true
-        triggerButton.accessibilityLabel = "Show License Agreement"
+        triggerButton.accessibilityLabel = "Show License Agreement 1a"
         stackView.addArrangedSubview(triggerButton)
         
         // Good Example Details
-        let goodDisclosureView = createDisclosureGroup(title: "Details", content: "The good alert example uses `.popover()` to create a native SwiftUI popover that receives VoiceOver focus when displayed. Additionally, `AccessibilityFocusState` is used to send focus back to the trigger button that opened the popover when the popover is closed. The popover title is correctly coded as a heading.", hint: "Good Example")
+        let goodDisclosureView = createDisclosureGroup(title: "Details", content: "The good alert example uses `.popover()` to create a native SwiftUI popover that receives VoiceOver focus when displayed. Additionally, `AccessibilityFocusState` is used to send focus back to the trigger button that opened the popover when the popover is closed. The popover title is correctly coded as a heading.", hint: "Good Example 2a")
         stackView.addArrangedSubview(goodDisclosureView)
         
         // Bad Example Header
@@ -100,7 +100,8 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         
         // Bad Example Button
         let badButton = UIButton(type: .system)
-        badButton.setTitle("Show License Agreement", for: .normal)
+        badButton.setTitle("Show License Agreement Bad", for: .normal)
+        badButton.accessibilityLabel = "Show License Agreement 1b"
         badButton.contentHorizontalAlignment = .left
         badButton.addTarget(self, action: #selector(toggleBadPopover), for: .touchUpInside)
         stackView.addArrangedSubview(badButton)
@@ -112,7 +113,7 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         stackView.addArrangedSubview(badPopoverView)
         
         // Bad Example Details
-        let badDisclosureView = createDisclosureGroup(title: "Details", content: "The bad popover example uses a custom view which does not receive VoiceOver focus when displayed and does not return focus when closed. The popover title is not coded as a heading.", hint: "Bad Example")
+        let badDisclosureView = createDisclosureGroup(title: "Details", content: "The bad popover example uses a custom view which does not receive VoiceOver focus when displayed and does not return focus when closed. The popover title is not coded as a heading.", hint: "Bad Example 2b")
         stackView.addArrangedSubview(badDisclosureView)
     }
     
@@ -147,6 +148,7 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         button.setTitle("\(title) ▼", for: .normal)
         button.contentHorizontalAlignment = .left
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = hint
         containerView.addSubview(button)
         
         let contentLabel = UILabel()
@@ -254,6 +256,7 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         
         let dismissButton = UIButton(type: .system)
         dismissButton.setTitle("Dismiss", for: .normal)
+        dismissButton.accessibilityLabel = "Dismiss Btn"
         dismissButton.addTarget(self, action: #selector(dismissGoodPopover), for: .touchUpInside)
         
         stackView.addArrangedSubview(titleLabel)
