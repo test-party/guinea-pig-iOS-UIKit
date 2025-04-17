@@ -68,7 +68,7 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         ])
         
         // Description Text
-        let descriptionLabel = createLabel(with: "VoiceOver focus must move to the popover when displayed and back to the trigger button when the popover is closed. Popover title text must be coded as a Heading for VoiceOver users. Use `.popover()` to code a native SwiftUI popover that receives VoiceOver focus when opened. Use `AccessibilityFocusState` to send focus back to the trigger button that opened the popover when the popover is closed.")
+        let descriptionLabel = createLabel(with: "VoiceOver focus must move to the popover when displayed and back to the trigger button when the popover is closed. Popover title text must be coded as a Heading for VoiceOver users. Use `.popover()` to code a native SwiftUI popover that receives VoiceOver focus when opened. Use `AccessibilityFocusState` to send focus back to the trigger button that opened the popover when the popover is closed.  Place the popover's content inside a ScrollView or else the text will truncate when enlarged.")
         stackView.addArrangedSubview(descriptionLabel)
         
         // Good Example Header
