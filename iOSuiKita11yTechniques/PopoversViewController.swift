@@ -5,8 +5,8 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
     
     // MARK: - Properties
     private var isShowingPopover = false
-    private var isShowingPopoverBad = false
     private var triggerButton: UIButton!
+    private var badButton: UIButton!
     
     private let darkGreen = UIColor(red: 0/255, green: 102/255, blue: 0/255, alpha: 1.0)
     private let darkRed = UIColor(red: 220/255, green: 20/255, blue: 60/255, alpha: 1.0)
@@ -68,7 +68,7 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         ])
         
         // Description Text
-        let descriptionLabel = createLabel(with: "VoiceOver focus must move to the popover when displayed and back to the trigger button when the popover is closed. Popover title text must be coded as a Heading for VoiceOver users. Use `.popover()` to code a native SwiftUI popover that receives VoiceOver focus when opened. Use `AccessibilityFocusState` to send focus back to the trigger button that opened the popover when the popover is closed.")
+        let descriptionLabel = createLabel(with: "VoiceOver focus must move to the popover when displayed and back to the trigger button when the popover is closed. Popover title text must be coded as a Heading for VoiceOver users. Use `.popover()` to code a native SwiftUI popover that receives VoiceOver focus when opened. Use `AccessibilityFocusState` to send focus back to the trigger button that opened the popover when the popover is closed.  Place the popover's content inside a ScrollView or else the text will truncate when enlarged.")
         stackView.addArrangedSubview(descriptionLabel)
         
         // Good Example Header
@@ -84,11 +84,11 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         triggerButton.contentHorizontalAlignment = .left
         triggerButton.addTarget(self, action: #selector(showGoodPopover), for: .touchUpInside)
         triggerButton.isAccessibilityElement = true
-        triggerButton.accessibilityLabel = "Show License Agreement"
+        triggerButton.accessibilityLabel = "Show License Agreement 1a"
         stackView.addArrangedSubview(triggerButton)
         
         // Good Example Details
-        let goodDisclosureView = createDisclosureGroup(title: "Details", content: "The good alert example uses `.popover()` to create a native SwiftUI popover that receives VoiceOver focus when displayed. Additionally, `AccessibilityFocusState` is used to send focus back to the trigger button that opened the popover when the popover is closed. The popover title is correctly coded as a heading.", hint: "Good Example")
+        let goodDisclosureView = createDisclosureGroup(title: "Details", content: "The good alert example uses `.popover()` to create a native SwiftUI popover that receives VoiceOver focus when displayed. Additionally, `AccessibilityFocusState` is used to send focus back to the trigger button that opened the popover when the popover is closed. The popover title is correctly coded as a heading.", hint: "Good Example 2a")
         stackView.addArrangedSubview(goodDisclosureView)
         
         // Bad Example Header
@@ -99,20 +99,15 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         stackView.addArrangedSubview(badDivider)
         
         // Bad Example Button
-        let badButton = UIButton(type: .system)
-        badButton.setTitle("Show License Agreement", for: .normal)
+        badButton = UIButton(type: .system)
+        badButton.setTitle("Show License Agreement Bad", for: .normal)
+        badButton.accessibilityLabel = "Show License Agreement 1b"
         badButton.contentHorizontalAlignment = .left
-        badButton.addTarget(self, action: #selector(toggleBadPopover), for: .touchUpInside)
+        badButton.addTarget(self, action: #selector(showBadPopover), for: .touchUpInside)
         stackView.addArrangedSubview(badButton)
         
-        // Bad popover container view - initially hidden
-        let badPopoverView = createBadPopoverView()
-        badPopoverView.isHidden = true
-        badPopoverView.tag = 100  // For identification
-        stackView.addArrangedSubview(badPopoverView)
-        
         // Bad Example Details
-        let badDisclosureView = createDisclosureGroup(title: "Details", content: "The bad popover example uses a custom view which does not receive VoiceOver focus when displayed and does not return focus when closed. The popover title is not coded as a heading.", hint: "Bad Example")
+        let badDisclosureView = createDisclosureGroup(title: "Details", content: "The bad popover example uses a true popover but does not properly handle VoiceOver focus. The title is not coded as a heading and there is no ScrollView, which can cause content truncation when text is enlarged.", hint: "Bad Example 2b")
         stackView.addArrangedSubview(badDisclosureView)
     }
     
@@ -147,6 +142,7 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         button.setTitle("\(title) ▼", for: .normal)
         button.contentHorizontalAlignment = .left
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = hint
         containerView.addSubview(button)
         
         let contentLabel = UILabel()
@@ -175,119 +171,130 @@ class PopoversViewController: UIViewController, UIPopoverPresentationControllerD
         return containerView
     }
     
-    private func createBadPopoverView() -> UIView {
-        let containerView = UIView()
-        
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 12
-        stackView.alignment = .center
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
-            stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
-            stackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
-            stackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8)
-        ])
-        
-        let titleLabel = UILabel()
-        titleLabel.text = "License Agreement"
-        titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        
-        let contentLabel = UILabel()
-        contentLabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        contentLabel.numberOfLines = 0
-        
-        let dismissButton = UIButton(type: .system)
-        dismissButton.setTitle("Dismiss", for: .normal)
-        dismissButton.addTarget(self, action: #selector(toggleBadPopover), for: .touchUpInside)
-        
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(contentLabel)
-        stackView.addArrangedSubview(dismissButton)
-        
-        return containerView
-    }
-    
-    // MARK: - Actions
-    @objc private func showGoodPopover() {
-        // Create popover content
+    // MARK: - Create Popover Content
+    private func createPopoverContent(isGoodExample: Bool) -> UIViewController {
         let popoverVC = UIViewController()
         popoverVC.preferredContentSize = CGSize(width: 300, height: 400)
         popoverVC.view.backgroundColor = .systemBackground
         
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        popoverVC.view.addSubview(scrollView)
+        if isGoodExample {
+            // Good example uses ScrollView
+            let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            popoverVC.view.addSubview(scrollView)
+            
+            let stackView = createPopoverStackView()
+            scrollView.addSubview(stackView)
+            
+            NSLayoutConstraint.activate([
+                scrollView.topAnchor.constraint(equalTo: popoverVC.view.topAnchor),
+                scrollView.leadingAnchor.constraint(equalTo: popoverVC.view.leadingAnchor),
+                scrollView.trailingAnchor.constraint(equalTo: popoverVC.view.trailingAnchor),
+                scrollView.bottomAnchor.constraint(equalTo: popoverVC.view.bottomAnchor),
+                
+                stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
+                stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+                stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
+                stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
+                stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
+            ])
+            
+            // Add content to good example
+            addPopoverContent(to: stackView, isGoodExample: true)
+        } else {
+            // Bad example doesn't use ScrollView
+            let stackView = createPopoverStackView()
+            popoverVC.view.addSubview(stackView)
+            
+            NSLayoutConstraint.activate([
+                stackView.topAnchor.constraint(equalTo: popoverVC.view.topAnchor, constant: 16),
+                stackView.leadingAnchor.constraint(equalTo: popoverVC.view.leadingAnchor, constant: 16),
+                stackView.trailingAnchor.constraint(equalTo: popoverVC.view.trailingAnchor, constant: -16),
+                stackView.bottomAnchor.constraint(equalTo: popoverVC.view.bottomAnchor, constant: -16)
+            ])
+            
+            // Add content to bad example
+            addPopoverContent(to: stackView, isGoodExample: false)
+        }
         
+        return popoverVC
+    }
+    
+    private func createPopoverStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 16
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(stackView)
-        
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: popoverVC.view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: popoverVC.view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: popoverVC.view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: popoverVC.view.bottomAnchor),
-            
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
-            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -16),
-            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -32)
-        ])
-        
-        // Add popover content
+        return stackView
+    }
+    
+    private func addPopoverContent(to stackView: UIStackView, isGoodExample: Bool) {
+        // Title
         let titleLabel = UILabel()
         titleLabel.text = "License Agreement"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        titleLabel.accessibilityTraits = .header
         
+        // Only add accessibility trait to good example
+        if isGoodExample {
+            titleLabel.accessibilityTraits = .header
+        }
+        
+        // Content
         let contentLabel = UILabel()
         contentLabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
         contentLabel.numberOfLines = 0
         
+        // Dismiss button
         let dismissButton = UIButton(type: .system)
         dismissButton.setTitle("Dismiss", for: .normal)
-        dismissButton.addTarget(self, action: #selector(dismissGoodPopover), for: .touchUpInside)
+        dismissButton.accessibilityLabel = isGoodExample ? "Dismiss Btn" : "Dismiss"
+        dismissButton.addTarget(self, action: isGoodExample ? #selector(dismissGoodPopover) : #selector(dismissBadPopover), for: .touchUpInside)
         
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(contentLabel)
         stackView.addArrangedSubview(dismissButton)
-        
-        // Set up and present the popover
+    }
+    
+    // MARK: - Actions
+    @objc private func showGoodPopover() {
+        let popoverVC = createPopoverContent(isGoodExample: true)
+        presentPopover(popoverVC, from: triggerButton, isGoodExample: true)
+    }
+    
+    @objc private func showBadPopover() {
+        let popoverVC = createPopoverContent(isGoodExample: false)
+        presentPopover(popoverVC, from: badButton, isGoodExample: false)
+    }
+    
+    private func presentPopover(_ popoverVC: UIViewController, from sourceView: UIView, isGoodExample: Bool) {
         popoverVC.modalPresentationStyle = .popover
-        popoverVC.popoverPresentationController?.sourceView = triggerButton
-        popoverVC.popoverPresentationController?.sourceRect = triggerButton.bounds
+        popoverVC.popoverPresentationController?.sourceView = sourceView
+        popoverVC.popoverPresentationController?.sourceRect = sourceView.bounds
         popoverVC.popoverPresentationController?.permittedArrowDirections = .any
         popoverVC.popoverPresentationController?.delegate = self
         
         present(popoverVC, animated: true) {
-            UIAccessibility.post(notification: .screenChanged, argument: titleLabel)
+            if isGoodExample {
+                // Only send accessibility notification for good example
+                if let titleLabel = popoverVC.view.subviews.first?.subviews.first?.subviews.first as? UILabel {
+                    UIAccessibility.post(notification: .screenChanged, argument: titleLabel)
+                }
+                self.isShowingPopover = true
+            }
         }
-        
-        isShowingPopover = true
     }
     
     @objc private func dismissGoodPopover() {
         dismiss(animated: true) {
             self.isShowingPopover = false
-            // Return accessibility focus to trigger button
+            // Return accessibility focus to trigger button - only for good example
             UIAccessibility.post(notification: .screenChanged, argument: self.triggerButton)
         }
     }
     
-    @objc private func toggleBadPopover() {
-        isShowingPopoverBad.toggle()
-        
-        if let badPopoverView = contentView.viewWithTag(100) {
-            badPopoverView.isHidden = !isShowingPopoverBad
-        }
+    @objc private func dismissBadPopover() {
+        dismiss(animated: true)
     }
     
     // MARK: - UIPopoverPresentationControllerDelegate
