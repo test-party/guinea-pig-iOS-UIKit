@@ -90,7 +90,7 @@ class CheckboxesViewController: UIViewController {
         ])
         
         // Introduction text
-        let introText = createLabel(text: "SwiftUI has no native checkbox control or accessibility trait for VoiceOver. Code checkboxes as `Toggle` elements with a custom `.toggleStyle`. Use `Toggle(\"Label Text\")` to create label text. Use `.accessibilityValue(isChecked ? \"Checked\" : \"Unchecked\")` to create custom value text for VoiceOver. Checkbox groups need an accessibility label for the group which matches the visible group label text. Use `.accessibilityElement(children: .contain)` and `.accessibilityLabel(\"Group Label\")` on the checkbox group container so that VoiceOver users hear the group label spoken when first moving focus to a checkbox in the group.")
+        let introText = createLabel(text: "UIKit has no native checkbox control. For proper checkbox accessibility, use UISwitch with custom appearance for checkbox-like behavior. Ensure proper accessibility traits by using accessibilityTraits = .button and configure accessibilityValue to return \"Checked\" or \"Unchecked\" based on state. Checkbox groups need an accessibility label for the group which matches the visible group label text. Use isAccessibilityElement = false and accessibilityElements = [checkboxElements] on the checkbox group container with appropriate accessibilityLabel so that VoiceOver users hear the group label spoken when first moving focus to a checkbox in the group.")
         stackView.addArrangedSubview(introText)
         
         // Good Examples Header
@@ -104,14 +104,14 @@ class CheckboxesViewController: UIViewController {
         let goodSingleHeader = createHeaderLabel(text: "Good Example Single Checkbox", isSubheader: true)
         stackView.addArrangedSubview(goodSingleHeader)
         
-        let goodCheckbox = createCheckbox(text: "Accept Terms", isChecked: isChecked)
+        let goodCheckbox = createAccessibleCheckbox(text: "Accept Terms", isChecked: isChecked)
         goodCheckbox.addTarget(self, action: #selector(goodCheckboxTapped), for: .touchUpInside)
         goodCheckbox.accessibilityIdentifier = "checkboxGood"
         stackView.addArrangedSubview(goodCheckbox)
         
         let goodSingleDetails = createDisclosureGroup(
             headerText: "Details",
-            detailsText: "The good single checkbox example uses a native `Toggle` with a custom `.toggleStyle` to look like a square checkbox control. Additionally `.accessibilityValue(isChecked ? \"Checked\" : \"Unchecked\")` is used to create custom value text for VoiceOver. VoiceOver reads the \"Switch button\" trait and \"Checked\" and \"Unchecked\" values.",
+            detailsText: "The good single checkbox example uses a custom control with proper accessibility configuration. It sets accessibilityTraits = .button and properly updates accessibilityValue to \"Checked\" or \"Unchecked\" based on state. VoiceOver users hear the state changes clearly.",
             accessibilityHint: "Good Example Single Checkbox"
         )
         stackView.addArrangedSubview(goodSingleDetails)
@@ -123,6 +123,7 @@ class CheckboxesViewController: UIViewController {
         let groupLabel = createLabel(text: "Preferred contact method(s):")
         stackView.addArrangedSubview(groupLabel)
         
+        // Creating container for group accessibility
         let checkboxGroupContainer = UIView()
         checkboxGroupContainer.isAccessibilityElement = false
         checkboxGroupContainer.accessibilityElements = []
@@ -142,23 +143,24 @@ class CheckboxesViewController: UIViewController {
             groupStack.bottomAnchor.constraint(equalTo: checkboxGroupContainer.bottomAnchor)
         ])
         
-        let emailCheckbox = createCheckbox(text: "Email", isChecked: isEmailChecked)
+        let emailCheckbox = createAccessibleCheckbox(text: "Email", isChecked: isEmailChecked)
         emailCheckbox.addTarget(self, action: #selector(emailCheckboxTapped), for: .touchUpInside)
         groupStack.addArrangedSubview(emailCheckbox)
         
-        let phoneCheckbox = createCheckbox(text: "Phone", isChecked: isPhoneChecked)
+        let phoneCheckbox = createAccessibleCheckbox(text: "Phone", isChecked: isPhoneChecked)
         phoneCheckbox.addTarget(self, action: #selector(phoneCheckboxTapped), for: .touchUpInside)
         groupStack.addArrangedSubview(phoneCheckbox)
         
-        let textCheckbox = createCheckbox(text: "Text", isChecked: isTextChecked)
+        let textCheckbox = createAccessibleCheckbox(text: "Text", isChecked: isTextChecked)
         textCheckbox.addTarget(self, action: #selector(textCheckboxTapped), for: .touchUpInside)
         groupStack.addArrangedSubview(textCheckbox)
         
+        // Set the accessible elements for the container
         checkboxGroupContainer.accessibilityElements = [emailCheckbox, phoneCheckbox, textCheckbox]
         
         let goodGroupDetails = createDisclosureGroup(
             headerText: "Details",
-            detailsText: "The good checkbox group example uses `.accessibilityElement(children: .contain)` and `.accessibilityLabel(\"Group Label\")` on the checkbox group container so that VoiceOver users hear the group label spoken when first moving focus to a checkbox in the group.",
+            detailsText: "The good checkbox group example uses isAccessibilityElement = false and accessibilityElements = [checkboxElements] on the group container with accessibilityLabel matching the group label text. VoiceOver users hear the group label spoken when first moving focus to a checkbox in the group.",
             accessibilityHint: "Good Example Checkbox Group"
         )
         stackView.addArrangedSubview(goodGroupDetails)
@@ -181,7 +183,7 @@ class CheckboxesViewController: UIViewController {
         
         let badSingleDetails = createDisclosureGroup(
             headerText: "Details",
-            detailsText: "The bad single checkbox example uses a `Button` that changes an `Image` when tapped to look like a square checkbox control. VoiceOver reads a \"Button\" trait and does not read \"Checked\" or \"Unchecked\" values.",
+            detailsText: "The bad single checkbox example uses a Button that changes an Image when tapped to look like a square checkbox control, but does not set appropriate accessibilityValue. VoiceOver users cannot determine whether it is checked or unchecked.",
             accessibilityHint: "Bad Example Single Checkbox"
         )
         stackView.addArrangedSubview(badSingleDetails)
@@ -193,20 +195,21 @@ class CheckboxesViewController: UIViewController {
         let badGroupLabel = createLabel(text: "Preferred contact method(s):")
         stackView.addArrangedSubview(badGroupLabel)
         
+        // No container for group accessibility - bad example
         let badGroupStack = UIStackView()
         badGroupStack.axis = .vertical
         badGroupStack.spacing = 8
         stackView.addArrangedSubview(badGroupStack)
         
-        let emailBadCheckbox = createCheckbox(text: "Email", isChecked: isEmailCheckedBad)
+        let emailBadCheckbox = createAccessibleCheckbox(text: "Email", isChecked: isEmailCheckedBad)
         emailBadCheckbox.addTarget(self, action: #selector(emailBadCheckboxTapped), for: .touchUpInside)
         badGroupStack.addArrangedSubview(emailBadCheckbox)
         
-        let phoneBadCheckbox = createCheckbox(text: "Phone", isChecked: isPhoneCheckedBad)
+        let phoneBadCheckbox = createAccessibleCheckbox(text: "Phone", isChecked: isPhoneCheckedBad)
         phoneBadCheckbox.addTarget(self, action: #selector(phoneBadCheckboxTapped), for: .touchUpInside)
         badGroupStack.addArrangedSubview(phoneBadCheckbox)
         
-        let textBadCheckbox = createCheckbox(text: "Text", isChecked: isTextCheckedBad)
+        let textBadCheckbox = createAccessibleCheckbox(text: "Text", isChecked: isTextCheckedBad)
         textBadCheckbox.addTarget(self, action: #selector(textBadCheckboxTapped), for: .touchUpInside)
         badGroupStack.addArrangedSubview(textBadCheckbox)
         
@@ -216,7 +219,7 @@ class CheckboxesViewController: UIViewController {
         
         let badGroupDetails = createDisclosureGroup(
             headerText: "Details",
-            detailsText: "The bad checkbox group example has no group accessibility label on the checkbox group container so VoiceOver users don't hear the group label spoken when first moving focus to a checkbox in the group.",
+            detailsText: "The bad checkbox group example has no group accessibility configuration. It doesn't set isAccessibilityElement = false or provide accessibilityElements and accessibilityLabel on the container, so VoiceOver users don't hear the group label spoken when focusing on checkboxes in the group.",
             accessibilityHint: "Bad Example Checkbox Group"
         )
         stackView.addArrangedSubview(badGroupDetails)
@@ -255,33 +258,19 @@ class CheckboxesViewController: UIViewController {
         return divider
     }
     
-    private func createCheckbox(text: String, isChecked: Bool) -> UIButton {
-        let button = UIButton(type: .system)
-        configureCheckbox(button, withText: text, isChecked: isChecked)
+    // Creates an accessible checkbox control using UIControl
+    private func createAccessibleCheckbox(text: String, isChecked: Bool) -> UIControl {
+        let checkbox = AccessibleCheckbox(frame: .zero)
+        checkbox.text = text
+        checkbox.isChecked = isChecked
         
-        // Set accessibility properties
-        button.accessibilityTraits = .button
-        button.accessibilityValue = isChecked ? "Checked" : "Unchecked"
-        button.accessibilityLabel = text
+        // Set a consistent height for the control
+        checkbox.heightAnchor.constraint(greaterThanOrEqualToConstant: 30).isActive = true
         
-        return button
+        return checkbox
     }
     
-    private func configureCheckbox(_ button: UIButton, withText text: String, isChecked: Bool) {
-        let checkboxImage = isChecked ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
-        button.setImage(checkboxImage, for: .normal)
-        button.setTitle(text, for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.contentHorizontalAlignment = .left
-        
-        // Configure the button's image and text placement
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        
-        // Set a consistent height for the button
-        button.heightAnchor.constraint(greaterThanOrEqualToConstant: 30).isActive = true
-    }
-    
+    // Creates a bad checkbox example using UIButton without proper accessibility
     private func createBadCheckbox(text: String, isChecked: Bool) -> UIButton {
         let button = UIButton(type: .system)
         let checkboxImage = isChecked ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
@@ -348,28 +337,31 @@ class CheckboxesViewController: UIViewController {
     }
     
     // MARK: - Actions
-    @objc private func goodCheckboxTapped(_ sender: UIButton) {
-        isChecked.toggle()
-        configureCheckbox(sender, withText: "Accept Terms", isChecked: isChecked)
-        sender.accessibilityValue = isChecked ? "Checked" : "Unchecked"
+    @objc private func goodCheckboxTapped(_ sender: UIControl) {
+        if let checkbox = sender as? AccessibleCheckbox {
+            checkbox.isChecked.toggle()
+        }
     }
     
-    @objc private func emailCheckboxTapped(_ sender: UIButton) {
-        isEmailChecked.toggle()
-        configureCheckbox(sender, withText: "Email", isChecked: isEmailChecked)
-        sender.accessibilityValue = isEmailChecked ? "Checked" : "Unchecked"
+    @objc private func emailCheckboxTapped(_ sender: UIControl) {
+        if let checkbox = sender as? AccessibleCheckbox {
+            checkbox.isChecked.toggle()
+            isEmailChecked = checkbox.isChecked
+        }
     }
     
-    @objc private func phoneCheckboxTapped(_ sender: UIButton) {
-        isPhoneChecked.toggle()
-        configureCheckbox(sender, withText: "Phone", isChecked: isPhoneChecked)
-        sender.accessibilityValue = isPhoneChecked ? "Checked" : "Unchecked"
+    @objc private func phoneCheckboxTapped(_ sender: UIControl) {
+        if let checkbox = sender as? AccessibleCheckbox {
+            checkbox.isChecked.toggle()
+            isPhoneChecked = checkbox.isChecked
+        }
     }
     
-    @objc private func textCheckboxTapped(_ sender: UIButton) {
-        isTextChecked.toggle()
-        configureCheckbox(sender, withText: "Text", isChecked: isTextChecked)
-        sender.accessibilityValue = isTextChecked ? "Checked" : "Unchecked"
+    @objc private func textCheckboxTapped(_ sender: UIControl) {
+        if let checkbox = sender as? AccessibleCheckbox {
+            checkbox.isChecked.toggle()
+            isTextChecked = checkbox.isChecked
+        }
     }
     
     @objc private func badCheckboxTapped(_ sender: UIButton) {
@@ -378,22 +370,25 @@ class CheckboxesViewController: UIViewController {
         sender.setImage(checkboxImage, for: .normal)
     }
     
-    @objc private func emailBadCheckboxTapped(_ sender: UIButton) {
-        isEmailCheckedBad.toggle()
-        configureCheckbox(sender, withText: "Email", isChecked: isEmailCheckedBad)
-        sender.accessibilityValue = isEmailCheckedBad ? "Checked" : "Unchecked"
+    @objc private func emailBadCheckboxTapped(_ sender: UIControl) {
+        if let checkbox = sender as? AccessibleCheckbox {
+            checkbox.isChecked.toggle()
+            isEmailCheckedBad = checkbox.isChecked
+        }
     }
     
-    @objc private func phoneBadCheckboxTapped(_ sender: UIButton) {
-        isPhoneCheckedBad.toggle()
-        configureCheckbox(sender, withText: "Phone", isChecked: isPhoneCheckedBad)
-        sender.accessibilityValue = isPhoneCheckedBad ? "Checked" : "Unchecked"
+    @objc private func phoneBadCheckboxTapped(_ sender: UIControl) {
+        if let checkbox = sender as? AccessibleCheckbox {
+            checkbox.isChecked.toggle()
+            isPhoneCheckedBad = checkbox.isChecked
+        }
     }
     
-    @objc private func textBadCheckboxTapped(_ sender: UIButton) {
-        isTextCheckedBad.toggle()
-        configureCheckbox(sender, withText: "Text", isChecked: isTextCheckedBad)
-        sender.accessibilityValue = isTextCheckedBad ? "Checked" : "Unchecked"
+    @objc private func textBadCheckboxTapped(_ sender: UIControl) {
+        if let checkbox = sender as? AccessibleCheckbox {
+            checkbox.isChecked.toggle()
+            isTextCheckedBad = checkbox.isChecked
+        }
     }
     
     @objc private func toggleDisclosure(_ sender: UIButton) {
@@ -416,7 +411,88 @@ class CheckboxesViewController: UIViewController {
     }
 }
 
-// MARK: - UIHostingController for SwiftUI integration
+// MARK: - Custom Accessible Checkbox
+class AccessibleCheckbox: UIControl {
+    
+    // MARK: - Properties
+    private let checkboxImageView = UIImageView()
+    private let textLabel = UILabel()
+    
+    var text: String = "" {
+        didSet {
+            textLabel.text = text
+            accessibilityLabel = text
+        }
+    }
+    
+    var isChecked: Bool = false {
+        didSet {
+            updateCheckboxAppearance()
+            accessibilityValue = isChecked ? "Checked" : "Unchecked"
+            sendActions(for: .valueChanged)
+        }
+    }
+    
+    // MARK: - Initialization
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupView()
+    }
+    
+    // MARK: - View Setup
+    private func setupView() {
+        // Configure image view
+        checkboxImageView.contentMode = .scaleAspectFit
+        checkboxImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(checkboxImageView)
+        
+        // Configure label
+        textLabel.numberOfLines = 0
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(textLabel)
+        
+        // Layout constraints
+        NSLayoutConstraint.activate([
+            checkboxImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            checkboxImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            checkboxImageView.widthAnchor.constraint(equalToConstant: 22),
+            checkboxImageView.heightAnchor.constraint(equalToConstant: 22),
+            
+            textLabel.leadingAnchor.constraint(equalTo: checkboxImageView.trailingAnchor, constant: 10),
+            textLabel.topAnchor.constraint(equalTo: topAnchor),
+            textLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            textLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+        
+        // Set accessibility properties
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        
+        // Update appearance
+        updateCheckboxAppearance()
+        
+        // Add tap gesture
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapGesture)
+    }
+    
+    private func updateCheckboxAppearance() {
+        let image = isChecked ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
+        checkboxImageView.image = image
+    }
+    
+    // MARK: - Actions
+    @objc private func handleTap() {
+        isChecked.toggle()
+    }
+}
+
+// MARK: - UIHostingController for SwiftUI integration if needed
 import SwiftUI
 
 // Use this to embed the ButtonsViewController in SwiftUI if needed
