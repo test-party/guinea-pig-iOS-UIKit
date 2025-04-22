@@ -129,7 +129,7 @@ class SteppersViewController: UIViewController, UITextFieldDelegate {
         copiesTextField.borderStyle = .roundedRect
         copiesTextField.text = "\(copies)"
         copiesTextField.keyboardType = .numberPad
-        copiesTextField.accessibilityLabel = "Copies"
+        copiesTextField.accessibilityLabel = "Copies1"
         copiesTextField.delegate = self
         copiesTextField.translatesAutoresizingMaskIntoConstraints = false
         goodStepperContainer2.addSubview(copiesTextField)
