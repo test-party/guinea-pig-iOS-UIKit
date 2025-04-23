@@ -194,7 +194,7 @@ class ProgressIndicatorsViewController: UIViewController {
         badProgressContainer.addSubview(activityIndicatorBad!)
         
         let saveBadButton = UIButton(type: .system)
-        saveBadButton.setTitle("Save", for: .normal)
+        saveBadButton.setTitle("Save Bad", for: .normal)
         saveBadButton.contentHorizontalAlignment = .left
         saveBadButton.translatesAutoresizingMaskIntoConstraints = false
         saveBadButton.accessibilityIdentifier = "saveBad"
@@ -278,6 +278,7 @@ class ProgressIndicatorsViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("\(title) ▼", for: .normal)
         button.contentHorizontalAlignment = .left
+        button.accessibilityLabel = hint
         button.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(button)
         
